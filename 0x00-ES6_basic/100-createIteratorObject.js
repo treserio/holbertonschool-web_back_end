@@ -11,8 +11,8 @@ export default function createIteratorObject(report) {
         // if this.emp exists, iterate the employee for the next next()
         if (this.report[keys[this.dep]][this.emp]) {
           this.emp += 1;
+          // returning the employee name at this.emp indx - 1 since we've moved passed it
           return {
-            // returning the the employee name at this.emp indx - 1 since we've moved passed it
             value: this.report[keys[this.dep]][this.emp - 1],
             done: false,
           };
