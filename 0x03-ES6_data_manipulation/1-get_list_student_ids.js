@@ -1,6 +1,6 @@
 export default function getListStudentIds(oList) {
   try {
-    return oList.map((val) => val.id);
+    return oList.map((st) => st.id);
   } catch (e) {
     return [];
   }
