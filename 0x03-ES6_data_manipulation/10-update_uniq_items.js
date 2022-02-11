@@ -1,12 +1,7 @@
-export default function updateUniqueItems(inMap) {
-  if (!(inMap instanceof Map)) throw Error('Cannot Process');
-  const oMap = new Map();
-  inMap.forEach((v, k) => {
-    if (v === 1) {
-      oMap.set(k, 100);
-    } else {
-      oMap.set(k, v);
-    }
-  });
-  return oMap;
+export default function updateUniqueItems(map) {
+  if (!(map instanceof Map)) throw Error('Cannot Process');
+  for (const [k, v] of map) {
+    if (v === 1) map.set(k, 100);
+  }
+  return map;
 }
