@@ -1,14 +1,13 @@
 export default function cleanSet(set, startString) {
-  try {
-    return Array.from(set)
-      .map((val) => {
-        if (startString && val.startsWith(startString)) {
-          return val.replace(startString, '');
-        }
-      })
-      .filter((val) => val)
-      .join('-');
-  } catch (e) {
-    return '';
-  }
+  if (!set || !startString || typeof startString !== 'string') return '';
+
+  return Array.from(set)
+    .map((val) => {
+      if (typeof val === 'string' && val.startsWith(startString)) {
+        return val.replace(startString, '');
+      }
+      return undefined;
+    })
+    .filter((val) => val)
+    .join('-');
 }
