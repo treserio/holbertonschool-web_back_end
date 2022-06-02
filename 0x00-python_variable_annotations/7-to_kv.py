@@ -6,6 +6,6 @@ annotated as a float. '''
 import typing
 
 
-def to_kv(k: str, v: typing.Union[int, float]) -> typing.Tuple:
+def to_kv(k: str, v: typing.Union[int, float]) -> typing.Tuple[str, float]:
     ''' return a tuple of a str and int or float '''
     return k, v
