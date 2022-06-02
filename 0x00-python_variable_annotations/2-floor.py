@@ -3,6 +3,6 @@
 returns the floor of the float. '''
 
 
-def floor(n: float) -> float:
+def floor(n: float) -> int:
     ''' return the floor of the float, int rounds down '''
     return int(n)
