@@ -21,6 +21,6 @@ class BasicCache(BaseCaching):
         # print(self.cache_order)
 
     def get(self, key):
-        ''' return '''
+        ''' return they key value from cache_data '''
         if key and key in self.cache_data:
             return self.cache_data[key]
