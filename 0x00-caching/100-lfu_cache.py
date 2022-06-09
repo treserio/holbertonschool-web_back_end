@@ -44,10 +44,10 @@ class LFUCache(BasicCache):
         self.lru_order[key] = self.lru
         self.lru += 1
         # print('input key', key)
-        if key in self.lfu_order:
-            self.lfu_order[key] += 1
-        else:
-            self.lfu_order[key] = 0
+        # if key in self.lfu_order:
+        #     self.lfu_order[key] += 1
+        # else:
+        self.lfu_order[key] = 0
 
     def get(self, key):
         ''' the least recently USED, put & get? '''
