@@ -13,7 +13,7 @@ class LRUCache(BasicCache):
         self.lru = 0
 
     def put(self, key, item):
-        ''' redefining puts method to use FIFO to maintain MAX_ITEMS '''
+        ''' redefining puts method to use LRU to maintain MAX_ITEMS '''
         if len(self.cache_data) == self.MAX_ITEMS \
                 and key not in self.cache_data:
             rmKey = min(self.lru_order, key=lambda k: self.lru_order[k])
