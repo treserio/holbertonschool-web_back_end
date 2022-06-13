@@ -8,7 +8,6 @@ appropriate page of the dataset (i.e. the correct list of rows). If the input
 arguments are out of range for the dataset, an empty list should be returned.
 '''
 import csv
-import math
 import typing as typ
 index_range = __import__('0-simple_helper_function').index_range
 
