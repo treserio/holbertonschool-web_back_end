@@ -32,13 +32,13 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) \
-			-> typ.List[typ.List]:
+            -> typ.List[typ.List]:
         ''' confirm page & page_size > 0 and ints return correct indeces
-		of our self.dataset
-		'''
+        of our self.dataset
+        '''
         assert type(page) == int and type(page_size) == int
         assert page > 0 and page_size > 0
         return self.dataset()[
-			index_range(page, page_size)[0]:
-			index_range(page, page_size)[1]
-		]
+            index_range(page, page_size)[0]:
+            index_range(page, page_size)[1]
+        ]

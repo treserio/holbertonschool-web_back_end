@@ -7,5 +7,5 @@ import typing as typ
 
 
 def index_range(page: int, page_size: int) -> typ.Tuple[int, int]:
-	''' return a tuple of the start end ind '''
-	return (page_size * page) - page_size, page_size * page
+    ''' return a tuple of the start end ind '''
+    return (page_size * page) - page_size, page_size * page
