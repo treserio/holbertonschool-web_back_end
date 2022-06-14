@@ -2,8 +2,6 @@
 """
 Deletion-resilient hypermedia pagination
 """
-
-from asyncore import loop
 import csv
 from typing import List, Dict
 
@@ -40,9 +38,10 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+        ''' return indices from index to index + page_size if present '''
         self.dataset()
         self.indexed_dataset()
-        assert type(index) is int and index <= len(self.__indexed_dataset)
+        assert index <= len(self.__indexed_dataset)
         data = []
         next_ind = page_size
         loop_range = list(range(index, index + page_size))
