@@ -105,3 +105,24 @@ def get_db() -> mysqlcon.connection.MySQLConnection:
         'password': os.environ.get("PERSONAL_DATA_DB_PASSWORD"),
         'database': os.environ.get("PERSONAL_DATA_DB_NAME")
     })
+
+
+def main():
+    ''' obtain a database connection using get_db and retrieve all rows in the
+    users table and display each row under a filtered format '''
+    con = get_db()
+    cursor = con.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM users;')
+    print('\n'.join(
+        filter_datum(
+            PII_FIELDS,
+            '***',
+            ';'.join(f'{k}={v}' for k, v in row.items()),
+            ';'
+        ) for row in cursor
+    ))
+    con.close()
+
+
+if __name__ == "__main__":
+    main()
