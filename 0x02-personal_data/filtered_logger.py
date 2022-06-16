@@ -15,8 +15,8 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: typ.List[str]):
-        ''' Instantiates the class using parent classes init method 
-        
+        ''' Instantiates the class using parent classes init method
+
             Args:
                 self: all attributes and methods of the class
                 fields: list of keys to obfuscate the values of
@@ -42,7 +42,8 @@ class RedactingFormatter(logging.Formatter):
             self.REDACTION,
             super().format(record),
             self.SEPARATOR
-        ).replace(self.SEPARATOR, f'{self.SEPARATOR} ')
+        )
+
 
 def filter_datum(
         fields: typ.List[str],
