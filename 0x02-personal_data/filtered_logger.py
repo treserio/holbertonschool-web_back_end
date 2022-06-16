@@ -6,7 +6,7 @@ import typing as typ
 import logging
 
 
-PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
 class RedactingFormatter(logging.Formatter):
@@ -78,9 +78,13 @@ def get_logger() -> logging.Logger:
         Returns:
             Logger with correct settings
     '''
-    logger = logging.Logger('user_data', logging.INFO)
+    # logger = logging.getLogger('user_data')
+    # logger.setLevel(logging.INFO)
+    logger = logging.Logger(name='user_data', level=logging.INFO)
+    # set propagate value to False
+    logger.propagate = False
+    # setup StreamHandler
     logger.addHandler(
         logging.StreamHandler().setFormatter(RedactingFormatter(PII_FIELDS))
     )
-    logger.propagate = False
     return logger
