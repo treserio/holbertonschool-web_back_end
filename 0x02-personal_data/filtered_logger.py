@@ -2,10 +2,11 @@
 ''' Write a function called filter_datum that returns the log message
 obfuscated '''
 import re
+import typing as typ
 
 
 def filter_datum(
-        fields: list,
+        fields: typ.List[str],
         redaction: str,
         message: str,
         separator: str
@@ -22,7 +23,7 @@ def filter_datum(
         str: the string with field values obfuscated with redaction
     '''
     return re.sub(
-        '|'.join(fr'(?<={field}=)[^{separator}]+' for field in fields),
+        '|'.join(fr'(?<={field}=)[^{separator}]*' for field in fields),
         redaction,
         message
     )
