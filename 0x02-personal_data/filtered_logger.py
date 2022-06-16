@@ -22,7 +22,7 @@ def filter_datum(
         str: the string with field values obfuscated with redaction
     '''
     return re.sub(
-        '|'.join(fr'(?<={field}=)[\w\d@/]+' for field in fields),
+        '|'.join(fr'(?<={field}=)[^{separator}]+' for field in fields),
         redaction,
         message
     )
