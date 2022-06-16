@@ -4,6 +4,8 @@ obfuscated '''
 import re
 import typing as typ
 import logging
+import os
+import mysql.connector as mysqlcon
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -88,3 +90,12 @@ def get_logger() -> logging.Logger:
         logging.StreamHandler().setFormatter(RedactingFormatter(PII_FIELDS))
     )
     return logger
+
+
+def get_db() -> mysqlcon.connection.MySQLConnection:
+    return mysqlcon.connect(**{
+        'host': os.environ.get("PERSONAL_DATA_DB_HOST"),
+        'user': os.environ.get("PERSONAL_DATA_DB_USERNAME"),
+        'password': os.environ.get("PERSONAL_DATA_DB_PASSWORD"),
+        'database': os.environ.get("PERSONAL_DATA_DB_NAME")
+    })
