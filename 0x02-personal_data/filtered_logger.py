@@ -23,7 +23,7 @@ class RedactingFormatter(logging.Formatter):
         ''' Instantiates the class using parent classes init method
 
             Args:
-                self: all attributes and methods of the class
+                self: this object
                 fields: list of keys to obfuscate the values of
 
             Returns:
@@ -78,7 +78,7 @@ def get_logger() -> logging.Logger:
     ''' Create a Logger obj with a StreamHandler and RedactingFormatter
 
         Returns:
-            Logger with correct settings
+            Logger: with correct settings
     '''
     # logger = logging.Logger(name='user_data', level=logging.INFO)
     logger = logging.getLogger('user_data')
@@ -96,7 +96,7 @@ def get_db() -> mysqlcon.connection.MySQLConnection:
     ''' Establish a mysql db connection
 
         Returns:
-            (mysql.connector): connection to the db listed in environ
+            mysql.connector: connection to the db listed in environ
             variables, with environ provided credentials
     '''
     return mysqlcon.connect(**{
@@ -120,7 +120,7 @@ def main():
     cursor.execute('SELECT * FROM users;')
     # print redacted user info in logger format
     for row in cursor:
-        logger.warning(';'.join(f'{k}={v}' for k, v in row.items()))
+        logger.warning('; '.join(f'{k}={v}' for k, v in row.items()))
     con.close()
 
 
