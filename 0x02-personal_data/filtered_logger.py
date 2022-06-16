@@ -93,6 +93,12 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysqlcon.connection.MySQLConnection:
+    ''' Establish a mysql db connection
+
+        Returns:
+            (mysql.connector): connection to the db listed in environ
+            variables, with environ provided credentials
+    '''
     return mysqlcon.connect(**{
         'host': os.environ.get("PERSONAL_DATA_DB_HOST"),
         'user': os.environ.get("PERSONAL_DATA_DB_USERNAME"),
