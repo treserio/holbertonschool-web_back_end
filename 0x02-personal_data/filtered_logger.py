@@ -80,15 +80,13 @@ def get_logger() -> logging.Logger:
         Returns:
             Logger with correct settings
     '''
-    # logger = logging.getLogger('user_data')
-    # logger.setLevel(logging.INFO)
     logger = logging.Logger(name='user_data', level=logging.INFO)
     # set propagate value to False
     logger.propagate = False
     # setup StreamHandler
-    logger.addHandler(
-        logging.StreamHandler().setFormatter(RedactingFormatter(PII_FIELDS))
-    )
+    stream = logging.StreamHandler()
+    stream.setFormatter(RedactingFormatter(PII_FIELDS))
+    logger.addHandler(stream)
     return logger
 
 
@@ -110,17 +108,17 @@ def get_db() -> mysqlcon.connection.MySQLConnection:
 def main():
     ''' obtain a database connection using get_db and retrieve all rows in the
     users table and display each row under a filtered format '''
+    # get the logger for correct formatting
+    logger = get_logger()
+    # establish the db connection
     con = get_db()
+    # setup the cursor to return field, value pairs
     cursor = con.cursor(dictionary=True)
+    # execute the search
     cursor.execute('SELECT * FROM users;')
-    print('\n'.join(
-        filter_datum(
-            PII_FIELDS,
-            '***',
-            ';'.join(f'{k}={v}' for k, v in row.items()),
-            ';'
-        ) for row in cursor
-    ))
+    # print redacted user info in logger format
+    for row in cursor:
+        logger.warning(';'.join(f'{k}={v}' for k, v in row.items()))
     con.close()
 
 
