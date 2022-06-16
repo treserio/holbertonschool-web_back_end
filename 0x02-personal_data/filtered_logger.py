@@ -80,7 +80,9 @@ def get_logger() -> logging.Logger:
         Returns:
             Logger with correct settings
     '''
-    logger = logging.Logger(name='user_data', level=logging.INFO)
+    # logger = logging.Logger(name='user_data', level=logging.INFO)
+    logger = logging.getLogger('user_data')
+    logger.setLevel(logging.INFO)
     # set propagate value to False
     logger.propagate = False
     # setup StreamHandler
