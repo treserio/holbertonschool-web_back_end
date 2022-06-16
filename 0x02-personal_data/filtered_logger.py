@@ -6,9 +6,12 @@ import typing as typ
 import logging
 
 
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
+
 class RedactingFormatter(logging.Formatter):
     ''' Redacting Formatter class
-        '''
+    '''
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -67,3 +70,17 @@ def filter_datum(
         redaction,
         message
     )
+
+
+def get_logger() -> logging.Logger:
+    ''' Create a Logger obj with a StreamHandler and RedactingFormatter
+
+        Returns:
+            Logger with correct settings
+    '''
+    logger = logging.Logger('user_data', logging.INFO)
+    logger.addHandler(
+        logging.StreamHandler().setFormatter(RedactingFormatter(PII_FIELDS))
+    )
+    logger.propagate = False
+    return logger
