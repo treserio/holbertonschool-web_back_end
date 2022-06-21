@@ -21,10 +21,19 @@ class Auth():
                 bool: False if the path or path+/ are present else True
         '''
         return not (path in excluded_paths or f'{path}/' in excluded_paths)\
-            if path else True
+            if path and excluded_paths else True
 
     def authorization_header(self, request=None) -> str:
-        ''' unlisted use '''
+        ''' return the value of the header request Authorization if request &
+        request has "Authorization" header
+
+            Args:
+                request (Flask.request): the request sent
+
+            Returns:
+                str: the Authorization header value
+        '''
+        print(type(request), request)
         return request.headers['Authorization']\
             if request and request.headers.get('Authorization') else None
 

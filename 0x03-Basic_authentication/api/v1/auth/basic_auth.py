@@ -7,8 +7,6 @@ import typing as typ
 
 class BasicAuth(Auth):
     ''' BasicAuth class for more advanced authentication '''
-
-
     def extract_base64_authorization_header(
         self,
         authorization_header: str
@@ -23,7 +21,6 @@ class BasicAuth(Auth):
         '''
         return authorization_header[6:] if type(authorization_header) == str and \
             authorization_header[:6] == 'Basic ' else None
-
 
     def decode_base64_authorization_header(
         self,
@@ -40,9 +37,8 @@ class BasicAuth(Auth):
         try:
             return b64decode(base64_authorization_header).decode('utf-8') \
             if type(base64_authorization_header) == str else None
-        except:
+        except Exception:
             pass
-
 
     def extract_user_credentials(
         self,
