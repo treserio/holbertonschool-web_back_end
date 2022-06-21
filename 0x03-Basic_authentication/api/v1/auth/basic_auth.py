@@ -19,8 +19,8 @@ class BasicAuth(Auth):
             Returns:
                 str: everything after 'Basic ' if present in the header text
         '''
-        return authorization_header[6:] if type(authorization_header) == str and \
-            authorization_header[:6] == 'Basic ' else None
+        return authorization_header[6:] if type(authorization_header) == str\
+            and authorization_header[:6] == 'Basic ' else None
 
     def decode_base64_authorization_header(
         self,
@@ -36,7 +36,7 @@ class BasicAuth(Auth):
         '''
         try:
             return b64decode(base64_authorization_header).decode('utf-8') \
-            if type(base64_authorization_header) == str else None
+                if type(base64_authorization_header) == str else None
         except Exception:
             pass
 
@@ -44,4 +44,5 @@ class BasicAuth(Auth):
         self,
         decoded_base64_authorization_header: str
     ) -> typ.Tuple[str, str]:
+        ''' checker needs a docstring? '''
         pass

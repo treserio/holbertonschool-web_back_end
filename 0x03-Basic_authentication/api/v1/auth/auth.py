@@ -33,7 +33,6 @@ class Auth():
             Returns:
                 str: the Authorization header value
         '''
-        print(type(request), request)
         return request.headers['Authorization']\
             if request and request.headers.get('Authorization') else None
 
