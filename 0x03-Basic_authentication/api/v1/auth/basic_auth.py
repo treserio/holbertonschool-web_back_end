@@ -44,5 +44,16 @@ class BasicAuth(Auth):
         self,
         decoded_base64_authorization_header: str
     ) -> typ.Tuple[str, str]:
-        ''' checker needs a docstring? '''
-        pass
+        ''' returns the user email and password from the Base64 decoded value
+
+            Args:
+                decoded_base64_authorization_header (str): string to pull
+                values from
+
+            Returns:
+                tuple (str, str): (email, password)
+        '''
+        return (decoded_base64_authorization_header.split(':')[0],
+        decoded_base64_authorization_header.split(':')[1])\
+            if type(decoded_base64_authorization_header) == str\
+            and ':' in decoded_base64_authorization_header else (None, None)
