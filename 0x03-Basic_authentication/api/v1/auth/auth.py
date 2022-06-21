@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 ''' create an Authorization class for request verification '''
 from flask import request
 import typing as typ
+
 
 class Auth():
     ''' Auth class for api access '''
@@ -21,13 +23,10 @@ class Auth():
         return not (path in excluded_paths or f'{path}/' in excluded_paths)\
             if path else True
 
-
     def authorization_header(self, request=None) -> str:
         ''' unlisted use '''
         return request.headers['Authorization']\
             if request and request.headers.get('Authorization') else None
-
-
 
     def current_user(self, request=None) -> typ.TypeVar('User'):
         ''' unlisted use '''

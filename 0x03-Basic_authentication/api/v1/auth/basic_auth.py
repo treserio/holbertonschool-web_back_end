@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 ''' create an Authorization class for request verification '''
 from api.v1.auth.auth import Auth
 from base64 import b64decode
