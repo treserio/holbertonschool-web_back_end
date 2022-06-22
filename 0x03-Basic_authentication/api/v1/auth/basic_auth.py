@@ -81,3 +81,23 @@ class BasicAuth(Auth):
                 user_pwd) else None
         except Exception:
             pass
+
+    def current_user(self, request=None) -> typ.TypeVar('User'):
+        ''' overloads current_user in Auth class and retrieves a User
+
+            Args:
+                request (Flask.request): the request sent
+
+            Returns:
+                User: object through authorization methods
+        '''
+        return self.user_object_from_credentials(
+                    self.extract_user_credentials(
+                        self.decode_base64_authorization_header(
+                            self.extract_base64_authorization_header(
+                                self.authorization_header(request)
+                            )
+                        )
+                    )
+                )
+
