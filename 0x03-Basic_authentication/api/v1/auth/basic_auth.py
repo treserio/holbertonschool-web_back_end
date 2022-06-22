@@ -54,8 +54,8 @@ class BasicAuth(Auth):
             Returns:
                 tuple (str, str): (email, password)
         '''
-        return (decoded_base64_authorization_header.split(':')[0],
-                decoded_base64_authorization_header.split(':')[1])\
+        return (decoded_base64_authorization_header.split(':', 1)[0],
+                decoded_base64_authorization_header.split(':', 1)[1])\
             if type(decoded_base64_authorization_header) == str\
             and ':' in decoded_base64_authorization_header else (None, None)
 
