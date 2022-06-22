@@ -46,6 +46,7 @@ class BasicAuth(Auth):
         decoded_base64_authorization_header: str
     ) -> typ.Tuple[str, str]:
         ''' returns the user email and password from the Base64 decoded value
+            allows passwords with ":" in them
 
             Args:
                 decoded_base64_authorization_header (str): string to pull

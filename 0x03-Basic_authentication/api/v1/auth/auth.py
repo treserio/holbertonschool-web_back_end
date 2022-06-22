@@ -2,6 +2,7 @@
 ''' create an Authorization class for request verification '''
 from flask import request
 import typing as typ
+import re
 
 
 class Auth():
@@ -12,6 +13,7 @@ class Auth():
         excluded_paths: typ.List[str]
     ) -> bool:
         ''' determine if path or path+/ are in the excluded_paths list
+            excluded_paths can contain * wildcards now
 
             Args:
                 path (str): string to check
@@ -20,8 +22,14 @@ class Auth():
             Returns:
                 bool: False if the path or path+/ are present else True
         '''
-        return not (path in excluded_paths or f'{path}/' in excluded_paths)\
-            if path and excluded_paths else True
+        if path and excluded_paths:
+            if re.match('|'.join(
+                regX.replace('*', '.*') for regX in excluded_paths
+            ), path) or re.match('|'.join(
+                regX.replace('*', '.*') for regX in excluded_paths
+            ), path+'/'):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         ''' return the value of the header request Authorization if request &
