@@ -92,7 +92,7 @@ class BasicAuth(Auth):
                 User: object through authorization methods
         '''
         return self.user_object_from_credentials(
-                    self.extract_user_credentials(
+                    *self.extract_user_credentials(
                         self.decode_base64_authorization_header(
                             self.extract_base64_authorization_header(
                                 self.authorization_header(request)
@@ -100,4 +100,3 @@ class BasicAuth(Auth):
                         )
                     )
                 )
-
