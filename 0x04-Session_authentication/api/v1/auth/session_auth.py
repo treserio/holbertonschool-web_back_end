@@ -24,3 +24,15 @@ class SessionAuth(Auth):
             sess_id = str(uuid.uuid4())
             self.user_id_by_session_id[sess_id] = user_id
             return sess_id
+
+    def user_id_for_session_id(self, session_id: str = None) -> str:
+        ''' that returns a User ID based on a Session ID
+
+            Args:
+                session_id (str): session id to locate user with
+
+            Returns:
+                str: user id for the listed session id
+        '''
+        return self.user_id_by_session_id.get(session_id) if session_id and \
+            type(session_id) == str else None
