@@ -36,3 +36,13 @@ def login():
         auth.create_session(user_list[0].id)
     )
     return output
+
+@app_views.route(
+    '/auth_session/logout',
+    methods=['DELETE'],
+    strict_slashes=False
+)
+def logout():
+    ''' delete a user session to effectively log them out '''
+    from api.v1.app import auth
+    return jsonify({}), 200 if auth.destroy_session(request) else abort(404)
