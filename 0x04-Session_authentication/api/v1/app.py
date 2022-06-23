@@ -26,7 +26,8 @@ elif os.getenv('AUTH_TYPE') == 'session_auth':
 
 @app.before_request
 def before_req():
-    ''' validate requests to the api before the request is sent '''
+    """ Validate requests to the api before the request is sent
+    """
     if auth and auth.require_auth(request.path, [
         '/api/v1/status/',
         '/api/v1/unauthorized/',
