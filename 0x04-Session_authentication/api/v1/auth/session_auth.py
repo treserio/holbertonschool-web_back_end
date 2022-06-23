@@ -7,7 +7,6 @@ from models.user import User
 # from base64 import b64decode
 
 
-
 class SessionAuth(Auth):
     ''' SessionAuth class for more advanced authentication '''
     user_id_by_session_id = {}
@@ -38,7 +37,6 @@ class SessionAuth(Auth):
         return self.user_id_by_session_id.get(session_id) if session_id and \
             type(session_id) == str else None
 
-
     def current_user(self, request=None):
         ''' returns a User instance based on a cookie value of the Session's id
 
@@ -48,4 +46,6 @@ class SessionAuth(Auth):
             Returns:
                 User: instance of the current session's User
         '''
-        return User.get(self.user_id_for_session_id(self.session_cookie(request)))
+        return User.get(
+            self.user_id_for_session_id(self.session_cookie(request))
+        )
