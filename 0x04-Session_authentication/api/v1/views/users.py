@@ -4,7 +4,6 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
-from ..app import auth
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -26,12 +25,13 @@ def view_one_user(user_id: str = None) -> str:
       - User object JSON represented
       - 404 if the User ID doesn't exist
     """
-    if user_id is None:
+    if user_id == 'me' and not request.current_user:
         abort(404)
-    user = User.get(user_id)
-    if user is None:
+    elif user_id == 'me' and request.current_user:
+        return jsonify(request.current_user.to_json())
+
+    return jsonify(User.get(user_id).to_json()) if User.get(user_id) else \
         abort(404)
-    return jsonify(user.to_json())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
@@ -108,10 +108,6 @@ def update_user(user_id: str = None) -> str:
     user = User.get(user_id)
     if user is None:
         abort(404)
-    if user_id == 'me' and not request.current_user:
-        abort(404)
-    elif user_id == 'me' and request.current_user:
-        return jsonify(auth.current_user(request)), 200
 
     rj = None
     try:
