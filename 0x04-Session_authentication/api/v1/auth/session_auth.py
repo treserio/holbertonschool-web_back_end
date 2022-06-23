@@ -51,7 +51,14 @@ class SessionAuth(Auth):
         )
 
     def destroy_session(self, request=None):
-        ''' deletes the session for the user effectively loging them out '''
+        ''' deletes the session for the user effectively loging them out
+
+            Args:
+                request (Flask.Request): the request sent
+
+            Returns:
+                Bool: True if session was deleted, else False
+        '''
         if request:
             sess_id = self.session_cookie(request)
             if sess_id:
