@@ -23,7 +23,6 @@ def login():
         return jsonify({"error": "password missing"}), 400
 
     user_list = User.search({'email': email})
-    print(len(user_list))
     if not user_list:
         return jsonify({"error": "no user found for this email"}), 404
     if not user_list[0].is_valid_password(password):
