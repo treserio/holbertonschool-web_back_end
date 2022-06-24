@@ -18,7 +18,10 @@ class SessionExpAuth(SessionAuth):
         ''' Create expiring session
 
             Args:
-                user_id (str)
+                user_id (str): the user_id to setup with the new session
+
+            Returns:
+                str: the id of the created session
         '''
         sess_id = super().create_session(user_id)
         if sess_id:
@@ -29,6 +32,14 @@ class SessionExpAuth(SessionAuth):
             return sess_id
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
+        ''' returns the user id for the session_id used
+
+            Args:
+                session_id (str): the session id for the user needed
+
+            Returns:
+                str: the user's id from the requested session
+        '''
         if session_id and session_id in self.user_id_by_session_id:
             if self.session_duration <= 0:
                 return self.user_id_by_session_id[session_id]['user_id']
