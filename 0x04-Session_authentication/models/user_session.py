@@ -13,8 +13,10 @@ class UserSession(Base):
         self.user_id = kwargs.get('user_id')
         self.session_id = kwargs.get('session_id')
         if kwargs.get('created_at'):
-            self.created_at = datetime.strptime(kwargs.get('created_at'),
-                "%Y-%m-%dT%H:%M:%S")
+            self.created_at = datetime.strptime(
+                kwargs.get('created_at'),
+                "%Y-%m-%dT%H:%M:%S"
+            )
         else:
             self.created_at = datetime.now()
         self.save()
