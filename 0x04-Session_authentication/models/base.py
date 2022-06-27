@@ -97,7 +97,7 @@ class Base():
         """ Remove object
         """
         s_class = self.__class__.__name__
-        if s_class is not 'UserSession':
+        if s_class != 'UserSession':
             if DATA[s_class].get(self.id) is not None:
                 del DATA[s_class][self.id]
         else:
@@ -132,7 +132,6 @@ class Base():
         """ Search all objects with matching attributes
         """
         s_class = cls.__name__
-
         def _search(obj):
             if len(attributes) == 0:
                 return True
@@ -140,5 +139,7 @@ class Base():
                 if (getattr(obj, k) != v):
                     return False
             return True
-
-        return list(filter(_search, DATA[s_class].values()))
+        if s_class in DATA:
+            return list(filter(_search, DATA[s_class].values()))
+        else:
+            return []

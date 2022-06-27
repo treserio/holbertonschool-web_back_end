@@ -16,7 +16,6 @@ def login():
     ''' session authentication handeler '''
     email = request.form.get('email')
     password = request.form.get('password')
-
     if not email:
         return jsonify({"error": "email missing"}), 400
     if not password:
@@ -34,6 +33,7 @@ def login():
         os.getenv('SESSION_NAME'),
         auth.create_session(user_list[0].id)
     )
+
     return output
 
 

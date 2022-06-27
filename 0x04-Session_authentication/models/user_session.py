@@ -2,6 +2,7 @@
 ''' user_session module
 '''
 from models.base import Base
+from datetime import datetime
 
 
 class UserSession(Base):
@@ -11,4 +12,9 @@ class UserSession(Base):
         super().__init__(*args, **kwargs)
         self.user_id = kwargs.get('user_id')
         self.session_id = kwargs.get('session_id')
+        if kwargs.get('created_at'):
+            self.created_at = datetime.strptime(kwargs.get('created_at'),
+                "%Y-%m-%dT%H:%M:%S")
+        else:
+            self.created_at = datetime.now()
         self.save()
