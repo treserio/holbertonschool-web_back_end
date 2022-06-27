@@ -97,9 +97,15 @@ class Base():
         """ Remove object
         """
         s_class = self.__class__.__name__
-        if DATA[s_class].get(self.id) is not None:
-            del DATA[s_class][self.id]
-            self.__class__.save_to_file()
+        if s_class is not 'UserSession':
+            if DATA[s_class].get(self.id) is not None:
+                del DATA[s_class][self.id]
+        else:
+            for k, v in DATA[s_class].items():
+                if v.user_id is self.user_id:
+                    break
+            del DATA[s_class][k]
+        self.__class__.save_to_file()
 
     @classmethod
     def count(cls) -> int:

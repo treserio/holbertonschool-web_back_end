@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 ''' create an Authorization class for request verification '''
 from api.v1.auth.auth import Auth
-import typing as typ
 import uuid
 from models.user import User
-# from base64 import b64decode
 
 
 class SessionAuth(Auth):
