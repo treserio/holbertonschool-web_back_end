@@ -64,3 +64,17 @@ class DB:
             raise NoResultFound
         except InvalidRequestError:
             raise InvalidRequestError
+
+    def update_user(self, user_id: int, **kwargs):
+        ''' update a User identified by user_id with key, value pairs
+
+            Args:
+                user_id (ind): the id of the user to update
+                kwargs (dic): dictionary of key, value pairs to add to User
+        '''
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if hasattr(user, k):
+                user.__dict__[k] = v
+            else:
+                raise ValueError
