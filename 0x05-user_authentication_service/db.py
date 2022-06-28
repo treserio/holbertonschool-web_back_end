@@ -3,7 +3,7 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Query
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 # from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm.exc import NoResultFound
@@ -65,7 +65,7 @@ class DB:
         except InvalidRequestError:
             raise InvalidRequestError
 
-    def update_user(self, user_id: int, **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         ''' update a User identified by user_id with key, value pairs
 
             Args:
