@@ -34,7 +34,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, em: str, hash_pw: str) -> typ.TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         ''' create a user instance and save it in the db
 
             Args:
@@ -44,7 +44,7 @@ class DB:
             Returns:
                 User: initialized User instance
         '''
-        new_user = User(email=em, hashed_password=hash_pw)
+        new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
         return new_user
@@ -64,6 +64,3 @@ class DB:
             raise NoResultFound
         except InvalidRequestError:
             raise InvalidRequestError
-
-
-
