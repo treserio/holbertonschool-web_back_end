@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Query
 from sqlalchemy.orm.session import Session
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import typing as typ
 
@@ -54,7 +54,8 @@ class DB:
             Args:
                 kwargs (dic): dictionary of key, value pairs to search for
 
-
+            Returns:
+                sqlAlchemy Query: with the results of the search
         '''
         try:
             return self._session.query(User).filter_by(**kwargs).one()
