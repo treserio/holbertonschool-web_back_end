@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 ''' temp Flask server
 '''
-from flask import Flask, Response, request, jsonify, abort, redirect
-from user import User
+from flask import Flask, request, jsonify, abort, redirect
 from auth import Auth
 
 
@@ -18,7 +17,7 @@ def root_path():
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def register_user() -> User:
+def register_user():
     ''' Registering a user
     JSON body:
         - email
@@ -43,7 +42,7 @@ def register_user() -> User:
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login_user() -> Response:
+def login_user():
     ''' logging in user with valid email / password
     JSON body:
         - email
@@ -66,7 +65,7 @@ def login_user() -> Response:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout_user() -> Response:
+def logout_user():
     ''' set User's session_id to None, logging out
     Cookie Required:
         - session_id
@@ -82,7 +81,7 @@ def logout_user() -> Response:
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
-def profile_user() -> Response:
+def profile_user():
     ''' find the email of the user tied to the session id sent
     Cookie Required:
         - session_id
@@ -103,7 +102,7 @@ def profile_user() -> Response:
 
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
-def reset_pw() -> Response:
+def reset_pw():
     ''' generate reset_password token for user
     JSON body:
         - email
@@ -112,7 +111,6 @@ def reset_pw() -> Response:
         - 403 if the user doesn't exist
     '''
     try:
-        # user = AUTH._db.find_user_by(email=request.form['email'])
         return jsonify({
             "email": request.form['email'],
             "reset_token": AUTH.get_reset_password_token(
@@ -124,15 +122,15 @@ def reset_pw() -> Response:
 
 
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
-def update_password() -> Response:
+def update_password():
     ''' generate reset_password token for user
     JSON body:
         - email
         - reset_token
         - new_password
     Return:
-        - JSON response with the user's email and reset_token
-        - 403 if the user doesn't exist
+        - JSON response letting user know password was updated
+        - 403 if there's an error
     '''
     try:
         AUTH.update_password(
