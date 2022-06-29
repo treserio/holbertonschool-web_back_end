@@ -44,7 +44,7 @@ def register_user() -> User:
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login_user() -> Response:
-    ''' Registering a user
+    ''' logging in user with valid email / password
     JSON body:
         - email
         - password
@@ -67,10 +67,9 @@ def login_user() -> Response:
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout_user() -> Response:
-    ''' Registering a user
+    ''' set User's session_id to None, logging out
     JSON body:
-        - email
-        - password
+        - session_id
     Return:
         - redirect to '/' if user exists
         - 403 if the user doesn't exist
@@ -78,6 +77,27 @@ def logout_user() -> Response:
     try:
         AUTH.destroy_session(request.cookies['session_id'])
         return redirect('/')
+    except Exception:
+        abort(403)
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def profile_user() -> Response:
+    ''' find the email of the user tied to the session id sent
+    JSON body:
+        - session_id
+    Return:
+        - JSON response with the user's email
+        - 403 if the user doesn't exist
+    '''
+    try:
+        user = AUTH.get_user_from_session_id(request.cookies['session_id'])
+        res = jsonify({"email": user.email})
+        res.set_cookie(
+            'session_id',
+            user.session_id
+        )
+        return res
     except Exception:
         abort(403)
 
