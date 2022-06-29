@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ''' temp Flask server
 '''
-from flask import Flask, jsonify, request, Response, abort
+from flask import Flask, Response, request, jsonify, abort, redirect
 from user import User
 from auth import Auth
 
@@ -63,6 +63,23 @@ def login_user() -> Response:
         )
         return res
     abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def login_user() -> Response:
+    ''' Registering a user
+    JSON body:
+        - email
+        - password
+    Return:
+        - redirect to '/' if user exists
+        - 403 if the user doesn't exist
+    '''
+    try:
+        AUTH.destroy_session(request.cookies['session_id'])
+        return redirect('/')
+    except Exception:
+        abort(403)
 
 
 if __name__ == "__main__":
