@@ -103,9 +103,25 @@ class Auth:
         ''' find a user by id and erase their session_id value
 
             Args:
-                user_id: the user id for the User
+                user_id (str): the user id for the User
         '''
         try:
             self._db.find_user_by(id=user_id).session_id = None
         except Exception:
             pass
+
+    def get_reset_password_token(self, email: str) -> str:
+        ''' find a user by email and assign thier reset_token to a UUID
+
+            Args:
+                email (str): the email id for the User
+
+            Returns:
+                str: the reset token created
+        '''
+        try:
+            user = self._db.find_user_by(email=email)
+            user.reset_token = _generate_uuid()
+            return user.reset_token
+        except Exception:
+            raise ValueError
