@@ -66,7 +66,7 @@ def login_user() -> Response:
 
 
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
-def login_user() -> Response:
+def logout_user() -> Response:
     ''' Registering a user
     JSON body:
         - email
