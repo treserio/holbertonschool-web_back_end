@@ -81,7 +81,7 @@ def logout_user() -> Response:
         abort(403)
 
 
-@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+@app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile_user() -> Response:
     ''' find the email of the user tied to the session id sent
     JSON body:
