@@ -112,14 +112,11 @@ def reset_pw() -> Response:
         - 403 if the user doesn't exist
     '''
     try:
-        user = AUTH._db.find_user_by(email=request.cookies['email'])
-        user.reset_token = AUTH.get_reset_password_token(user.email)
-        res = jsonify({"email": user.email, "reset_token": "<reset token>"})
-        res.set_cookie(
-            'session_id',
-            user.session_id
-        )
-        return res
+        user = AUTH._db.find_user_by(email=request.form['email'])
+        return jsonify({
+            "email": user.email,
+            "reset_token": AUTH.get_reset_password_token(user.email)
+        })
     except Exception:
         abort(403)
 
