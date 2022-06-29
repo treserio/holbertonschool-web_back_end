@@ -16,6 +16,7 @@ def root_path():
     '''
     return jsonify({"message": "Bienvenue"})
 
+
 @app.route('/users', methods=['POST'], strict_slashes=False)
 def register_user() -> User:
     ''' Registering a user
@@ -39,7 +40,6 @@ def register_user() -> User:
         return jsonify({'message': 'values missing, email & password'}), 400
     except Exception:
         return jsonify({'message': 'email already registered'}), 400
-
 
 
 if __name__ == "__main__":
