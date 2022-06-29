@@ -98,3 +98,14 @@ class Auth:
             return self._db.find_user_by(session_id=session_id)
         except Exception:
             return None
+
+    def destroy_session(self, user_id: str) -> None:
+        ''' find a user by id and erase their session_id value
+
+            Args:
+                user_id: the user id for the User
+        '''
+        try:
+            self._db.find_user_by(id=user_id).session_id = None
+        except Exception:
+            pass
