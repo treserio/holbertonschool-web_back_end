@@ -102,5 +102,27 @@ def profile_user() -> Response:
         abort(403)
 
 
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def reset_pw() -> Response:
+    ''' generate reset_password token for user
+    JSON body:
+        - email
+    Return:
+        - JSON response with the user's email and reset_token
+        - 403 if the user doesn't exist
+    '''
+    try:
+        user = AUTH._db.find_user_by(email=request.cookies['email'])
+        user.reset_token = AUTH.get_reset_password_token(user.email)
+        res = jsonify({"email": user.email, "reset_token": "<reset token>"})
+        res.set_cookie(
+            'session_id',
+            user.session_id
+        )
+        return res
+    except Exception:
+        abort(403)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
