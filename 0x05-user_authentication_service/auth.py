@@ -6,6 +6,7 @@ from user import User
 # from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm.exc import NoResultFound
 import bcrypt as bc
+import uuid
 
 
 def _hash_password(password: str) -> bytes:
@@ -18,6 +19,11 @@ def _hash_password(password: str) -> bytes:
             bytes: the byte representation of the input string
     '''
     return bc.hashpw(password.encode(), bc.gensalt(9))
+
+
+def _generate_uuid() -> str:
+    ''' generate a uuid string '''
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -49,8 +55,8 @@ class Auth:
         If it matches return True. In any other case, return False.
 
             Args:
-                email (str): email to use for new User
-                password (str): password to use for new User
+                email (str): email tied to a User
+                password (str): password to confirm is the User's
 
             Returns:
                 bool: True if password matches, else False
@@ -62,3 +68,19 @@ class Auth:
             )
         except Exception:
             return False
+
+    def create_session(self, email: str) -> str:
+        '''  returns the user's session ID as a string
+
+            Args:
+                email (str): email tied to a User
+
+            Returns:
+                str: the session ID of the user
+        '''
+        try:
+            user = self._db.find_user_by(email=email)
+            user.session_id = _generate_uuid()
+            return user.session_id
+        except NoResultFound:
+            pass
