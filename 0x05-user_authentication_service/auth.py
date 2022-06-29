@@ -106,7 +106,7 @@ class Auth:
                 user_id (str): the user id for the User
         '''
         try:
-            self._db.find_user_by(id=user_id).session_id = None
+            self._db.update_user(user_id, session_id=None)
         except Exception:
             pass
 
@@ -134,9 +134,8 @@ class Auth:
                 password (str): the password to hash and save in User
         '''
         try:
-            user = self._db.find_user_by(reset_token=reset_token)
             self._db.update_user(
-                user.id,
+                self._db.find_user_by(reset_token=reset_token).id,
                 hashed_password=_hash_password(password),
                 reset_token=None,
             )

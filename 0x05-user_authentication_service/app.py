@@ -68,7 +68,7 @@ def login_user() -> Response:
 @app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout_user() -> Response:
     ''' set User's session_id to None, logging out
-    JSON body:
+    Cookie Required:
         - session_id
     Return:
         - redirect to '/' if user exists
@@ -84,7 +84,7 @@ def logout_user() -> Response:
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile_user() -> Response:
     ''' find the email of the user tied to the session id sent
-    JSON body:
+    Cookie Required:
         - session_id
     Return:
         - JSON response with the user's email
@@ -112,10 +112,36 @@ def reset_pw() -> Response:
         - 403 if the user doesn't exist
     '''
     try:
-        user = AUTH._db.find_user_by(email=request.form['email'])
+        # user = AUTH._db.find_user_by(email=request.form['email'])
         return jsonify({
-            "email": user.email,
-            "reset_token": AUTH.get_reset_password_token(user.email)
+            "email": request.form['email'],
+            "reset_token": AUTH.get_reset_password_token(
+                request.form['email']
+            )
+        })
+    except Exception:
+        abort(403)
+
+
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password() -> Response:
+    ''' generate reset_password token for user
+    JSON body:
+        - email
+        - reset_token
+        - new_password
+    Return:
+        - JSON response with the user's email and reset_token
+        - 403 if the user doesn't exist
+    '''
+    try:
+        AUTH.update_password(
+            request.form['reset_token'],
+            request.form['new_password']
+        )
+        return jsonify({
+            "email": request.form['email'],
+            "message": "Password updated"
         })
     except Exception:
         abort(403)
