@@ -82,7 +82,7 @@ def logout_user():
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile_user():
-    ''' find the email of the user tied to the session id sent
+    ''' find the user's email by the session id sent
     Cookie Required:
         - session_id
     Return:
