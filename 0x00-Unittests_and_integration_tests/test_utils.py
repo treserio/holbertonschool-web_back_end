@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' Setting up unittests with mock and patch '''
+''' Setting up unittests with mock and patch for utils.py '''
 from utils import access_nested_map, get_json, memoize
 from unittest import TestCase
 from unittest.mock import patch
