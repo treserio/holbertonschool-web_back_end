@@ -2,7 +2,7 @@
 ''' Setting up unittests with mock and patch for client.py '''
 from utils import access_nested_map, get_json, memoize
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, Mock
 import typing as typ
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
@@ -11,16 +11,12 @@ from client import GithubOrgClient
 class TestGithubOrgClient(TestCase):
     ''' GithubOrgClient.public_repos integration test '''
     @parameterized.expand([
-        ('cpp-netlib'),
-        ('dagger')
+        ('google'),
+        ('abc')
     ])
-    def test_org(self, org_name):
+    @patch('client.get_json', return_value={'a': 'b'})
+    def test_org(self, org_name, m_get_json):
         ''' confirm the org property returns the correct info '''
-        with patch.object(GithubOrgClient, 'org', return_value={'a': 'b'}) as mocked:
-            client = GithubOrgClient(org_name)
-            self.assertEqual(client.org(), {'a': 'b'})
-        mocked.assert_called_once()
-
-
-
-
+        client = GithubOrgClient(org_name)
+        self.assertEqual(client.org, {'a': 'b'})
+        m_get_json.assert_called_once()
