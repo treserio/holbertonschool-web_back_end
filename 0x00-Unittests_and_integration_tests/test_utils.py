@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 ''' Setting up unittests with mock and patch '''
 from utils import access_nested_map, get_json, memoize
-from unittest import TestCase as TC
+from unittest import TestCase
 from unittest.mock import patch
 import typing as typ
 from parameterized import parameterized, parameterized_class
 
 
-class TestAccessNestedMap(TC):
+class TestAccessNestedMap(TestCase):
     ''' access_nested_map tester '''
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -36,7 +36,7 @@ class TestAccessNestedMap(TC):
         self.assertRaises(KeyError, access_nested_map, nested_map, keys)
 
 
-class TestGetJson(TC):
+class TestGetJson(TestCase):
     ''' get_json tester '''
     @parameterized.expand([
         ('http://example.com', {'payload': True}),
@@ -49,8 +49,8 @@ class TestGetJson(TC):
             self.assertEqual(get_json(url), json)
 
 
-class TestMemoize(TC):
-    ''' memoize tester '''
+class TestMemoize(TestCase):
+    ''' memoize function tester '''
     def test_memoize(self):
         ''' test to confirm memoize sets attribute of test object '''
         class TestClass:
