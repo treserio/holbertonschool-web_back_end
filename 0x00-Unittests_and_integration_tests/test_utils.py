@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ''' Setting up unittests with mock and patch '''
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from unittest import TestCase as TC
 from unittest.mock import patch
 import typing as typ
@@ -20,7 +20,7 @@ class TestAccessNestedMap(TC):
         keys: tuple,
         ret: typ.Union[int, dict]
     ) -> None:
-        ''' self explanatory test for access_nested_map '''
+        ''' test access_nested_map with valid keys in nested_map '''
         self.assertEqual(access_nested_map(nested_map, keys), ret)
 
     @parameterized.expand([
@@ -32,18 +32,40 @@ class TestAccessNestedMap(TC):
         nested_map: dict,
         keys: tuple
     ) -> None:
-        ''' test invalid keys for access_nested_map '''
+        ''' test access_nested_map with invalid keys '''
         self.assertRaises(KeyError, access_nested_map, nested_map, keys)
 
 
 class TestGetJson(TC):
     ''' get_json tester '''
     @parameterized.expand([
-        ("http://example.com", {"payload": True}),
-        ("http://holberton.io", {"payload": False}),
+        ('http://example.com', {'payload': True}),
+        ('http://holberton.io', {'payload': False}),
     ])
     def test_get_json(self, url: str, json: dict) -> None:
-        ''' test for get_json with mock.patch requests.get '''
-        with patch("requests.get") as m_g:
+        ''' test get_json with mock.patch requests.get '''
+        with patch('requests.get') as m_g:
             m_g.return_value.json.return_value = json
             self.assertEqual(get_json(url), json)
+
+
+class TestMemoize(TC):
+    ''' memoize tester '''
+    def test_memoize(self):
+        ''' test to confirm memoize sets attribute of test object '''
+        class TestClass:
+            ''' test class to use memoize on '''
+            def a_method(self):
+                ''' method in test class '''
+                return 42
+
+            @memoize
+            def a_property(self):
+                ''' property in test class '''
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method', return_value=99) as mocked:
+            test_obj = TestClass()
+            self.assertEqual(test_obj.a_property, 99)
+            self.assertEqual(test_obj.a_property, 99)
+        mocked.assert_called_once()
