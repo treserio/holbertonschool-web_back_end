@@ -5,7 +5,7 @@ from unittest import TestCase
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-import fixtures
+from fixtures import *
 from urllib.error import HTTPError
 import unittest
 
@@ -68,21 +68,20 @@ class TestGithubOrgClient(TestCase):
 
 
 @parameterized_class(
-    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
-    fixtures.TEST_PAYLOAD
-)
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    TEST_PAYLOAD
+    )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test for public repos method"""
+    ''' test the GithubOrgClient.public_repos
+        method in an integration test
+    '''
 
     @classmethod
     def setUpClass(cls):
-        """Set up class for integration tests"""
-        cls.get_patcher = patch(
-            "requests.get",
-            side_effect=HTTPError
-        )
+        ''' part of the unittest.TestCase API '''
+        cls.get_patcher = patch('requests.get.json', side_effect=HTTPError)
 
     @classmethod
     def tearDownClass(cls):
-        """Teardown for integration tests"""
+        ''' part of the unittest.TestCase API '''
         cls.get_patcher.stop()
