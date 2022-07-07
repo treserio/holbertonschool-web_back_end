@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 ''' Setting up unittests with mock and patch for client.py '''
 from utils import access_nested_map, get_json, memoize
-from unittest import TestCase
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-from fixtures import TEST_PAYLOAD
-from urllib.error import HTTPError
 import unittest
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -75,10 +73,10 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     ''' test the GithubOrgClient.public_repos
         method in an integration test
     '''
-
     @classmethod
     def setUpClass(cls):
         ''' part of the unittest.TestCase API '''
+        from urllib.error import HTTPError
         cls.get_patcher = patch('requests.get.json', side_effect=HTTPError)
 
     @classmethod
