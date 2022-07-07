@@ -45,7 +45,7 @@ class TestGithubOrgClient(TestCase):
         with patch(
             'client.GithubOrgClient._public_repos_url',
             new_callable=PropertyMock,
-            return_value={'repos_url': [{'name': 'john'}, {'name': 'sally'}]}
+            return_value=""
         ) as m_obj:
             thing = GithubOrgClient('org_name')
             self.assertEqual(
