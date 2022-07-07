@@ -3,9 +3,9 @@
 from utils import access_nested_map, get_json, memoize
 from unittest import TestCase
 from unittest.mock import patch, PropertyMock
-import typing as typ
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
+import fixtures
 
 
 class TestGithubOrgClient(TestCase):
@@ -63,3 +63,24 @@ class TestGithubOrgClient(TestCase):
         ''' test TestGithubOrgClient.has_license '''
         cls = GithubOrgClient('org_name')
         self.assertEqual(cls.has_license(repo, license_key), expected)
+
+
+@parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+    fixtures.TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(TestCase):
+    """Integration test for public repos method"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up class for integration tests"""
+        cls.get_patcher = patch(
+            "requests.get",
+            side_effect=fixtures.HTTPError
+        )
+
+    @classmethod
+    def tearDownClass(cls):
+        """Teardown for integration tests"""
+        cls.get_patcher.stop()
