@@ -5,12 +5,12 @@ from unittest import TestCase
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-from fixtures import *
+from fixtures import TEST_PAYLOAD
 from urllib.error import HTTPError
 import unittest
 
 
-class TestGithubOrgClient(TestCase):
+class TestGithubOrgClient(unittest.TestCase):
     ''' GithubOrgClient.public_repos integration test '''
     @parameterized.expand([('google'), ('abc')])
     @patch('client.get_json', return_value={'a': 'b'})
