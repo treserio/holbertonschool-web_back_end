@@ -7,6 +7,7 @@ from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
 import fixtures
 from urllib.error import HTTPError
+import unittest
 
 
 class TestGithubOrgClient(TestCase):
@@ -70,7 +71,7 @@ class TestGithubOrgClient(TestCase):
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
     fixtures.TEST_PAYLOAD
 )
-class TestIntegrationGithubOrgClient(TestCase):
+class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Integration test for public repos method"""
 
     @classmethod
