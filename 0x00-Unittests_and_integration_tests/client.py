@@ -40,8 +40,12 @@ class GithubOrgClient:
     def public_repos(self, license: str = None) -> List[str]:
         """Public repos"""
         json_payload = self.repos_payload
+        print()
+        print('json_pay', json_payload)
+        print('json_pay2', json_payload['repos_url'])
+        print()
         public_repos = [
-            repo["name"] for repo in json_payload
+            repo["name"] for repo in json_payload['repos_url']
             if license is None or self.has_license(repo, license)
         ]
 
