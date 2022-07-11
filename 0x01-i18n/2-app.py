@@ -2,7 +2,7 @@
 ''' temp Flask server
 '''
 from flask import Flask, render_template, g, request
-from flask_babel import Babel, Locale, localeselector
+from flask_babel import Babel, Locale
 
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ babel = Babel(app)
 def root_path():
     ''' Root path
     '''
-    return render_template('1-index.html')
+    return render_template('2-index.html')
 
 
 class Config():
@@ -23,7 +23,7 @@ class Config():
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
-@Babel.localeselector
+@babel.localeselector
 def get_locale():
     ''' determine best language to use from request.accept_languages '''
     return request.accept_languages.best_match(app.config.LANGUAGES)
