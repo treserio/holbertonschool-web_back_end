@@ -19,8 +19,8 @@ def root_path():
 class Config():
 	''' Config class '''
 	LANGUAGES = ["en", "fr"]
-	loc = Locale('en', 'US').time_zones['Europe/London']['city']
-	print(loc)
+	BABEL_DEFAULT_LOCALE = 'en'
+	BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
 app.config.from_object(Config())
