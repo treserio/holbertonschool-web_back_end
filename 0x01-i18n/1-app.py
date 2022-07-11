@@ -17,10 +17,10 @@ def root_path():
 
 
 class Config():
-	''' Config class '''
-	LANGUAGES = ["en", "fr"]
-	BABEL_DEFAULT_LOCALE = 'en'
-	BABEL_DEFAULT_TIMEZONE = 'UTC'
+    ''' Config class '''
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
 app.config.from_object(Config())
