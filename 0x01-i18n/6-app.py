@@ -35,15 +35,16 @@ app.config.from_object(Config)
 @babel.localeselector
 def get_locale():
     ''' determine best language to use in order from:
-        url parameter, request.args.get('locale'),
-        user settings, get_user['locale']
-        requets headers, request.accept_languages.best_match(app.config)
-        default config, app.config['BABEL_DEFAULT_LOCALE']
+
+        url parameter: request.args.get('locale'),
+        user settings: g.user.get('locale')
+        requets headers: request.accept_languages.best_match(app.config)
+        default config: app.config['BABEL_DEFAULT_LOCALE']
     '''
     if request.args.get('locale') in Config.LANGUAGES:
         return request.args.get('locale')
-    elif get_user().get('locale') in Config.LANGUAGES:
-        return get_user().get('locale')
+    elif g.user and g.user.get('locale') in Config.LANGUAGES:
+        return g.user.get('locale')
     elif request.accept_languages:
         request.accept_languages.best_match(app.config['LANGUAGES'])
     else:
