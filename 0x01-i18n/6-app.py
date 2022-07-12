@@ -42,13 +42,14 @@ def get_locale():
         default config: app.config['BABEL_DEFAULT_LOCALE']
     '''
     if request.args.get('locale') in Config.LANGUAGES:
-        return request.args.get('locale')
+        loc = request.args.get('locale')
     elif g.user and g.user.get('locale') in Config.LANGUAGES:
-        return g.user.get('locale')
+        loc = g.user.get('locale')
     elif request.accept_languages:
-        request.accept_languages.best_match(app.config['LANGUAGES'])
+        loc = request.accept_languages.best_match(app.config['LANGUAGES'])
     else:
-        app.config['BABEL_DEFAULT_LOCALE']
+        loc = app.config['BABEL_DEFAULT_LOCALE']
+    return loc
 
 
 def get_user():
