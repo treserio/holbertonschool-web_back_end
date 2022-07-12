@@ -8,8 +8,8 @@
 </head>
 <header><h1>{{ _('home_header') }}</h1></header>
 <body>
-    {% if g.user %}<p>You are logged in as {{ g.user }}.</p>
-    {% else %}<p>You are not logged in.</p>
+    {% if g.user %}<p>{{ _('logged_in_msg') }} {{ g.user }}.</p>
+    {% else %}<p>{{ _('logged_out_msg') }}</p>
     {% endif %}
 </body>
 </html>

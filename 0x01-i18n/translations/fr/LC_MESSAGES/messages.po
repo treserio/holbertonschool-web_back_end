@@ -23,3 +23,9 @@ msgstr "Bienvenue chez Holberton"
 
 msgid "home_header"
 msgstr "Bonjour monde!"
+
+msgid "logged_in_msg"
+msgstr "Vous êtes connecté en tant que"
+
+msgid "logged_out_msg"
+msgstr "Vous n'êtes pas connecté."
