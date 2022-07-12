@@ -29,3 +29,6 @@ msgstr "Vous êtes connecté en tant que"
 
 msgid "logged_out_msg"
 msgstr "Vous n'êtes pas connecté."
+
+msgid "current_time_is"
+msgstr "Nous sommes le %(current_time)s."
