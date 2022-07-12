@@ -46,7 +46,7 @@ def get_locale():
 
 def get_user():
     ''' return the mocked user dictionary based on id # '''
-    return users[int(request.args.get('login_as'))]['name'] \
+    return users[int(request.args.get('login_as'))] \
         if request.args.get('login_as') and \
         int(request.args.get('login_as')) in users else None
 
