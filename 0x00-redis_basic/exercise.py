@@ -19,3 +19,9 @@ class Cache():
         k = str(uuid4)
         self._redis.set(k, data)
         return k
+
+    def get(self, key: str, fn: typ.Callable = None) -> typ.Union[str, int]:
+        ''' return data from self._redis using key '''
+        if fn:
+            return fn(self._redis.get(key))
+        return self._redis.get(key)
