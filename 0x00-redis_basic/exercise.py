@@ -40,16 +40,14 @@ def replay(method: typ.Callable) -> None:
     ''' display the history of calls for a particular function '''
     Red = redis.Redis()
     qual = method.__qualname__
-
     # get a list of all the qual:inputs
-    inputs = Red.lrange(f"{qual}:inputs")
+    inputs = Red.lrange(f"{qual}:inputs", 0, -1)
     # get a list of all the qual:outputs
-    outputs = Red.lrange(f"{qual}:outputs")
+    outputs = Red.lrange(f"{qual}:outputs", 0, -1)
     print(f"{qual} was called {len(inputs)} times:")
-
     # print input and output sets decoded to utf-8
     print('\n'.join(
-        f"{qual}(*{(i).decode('utf-8')}) -> {(o).decode('utf-8')}"\
+        f"{qual}(*{(i).decode('utf-8')}) -> {(o).decode('utf-8')}"
         for i, o in zip(inputs, outputs)
     ))
 
