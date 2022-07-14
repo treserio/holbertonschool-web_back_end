@@ -10,11 +10,12 @@ from functools import wraps
 
 def count_calls(method: typ.Callable) -> typ.Callable:
     ''' return the number of times a callable was called '''
+    meth_name = method.__qualname__
 
     @wraps(method)
     def wrapper(self, *args, **kwargs) -> typ.Union[int, str]:
         ''' wrapper to increment counter '''
-        self._redis.incr(method.__qualname__)
+        self._redis.incr(meth_name)
         return method(self, *args, **kwargs)
 
     return wrapper
