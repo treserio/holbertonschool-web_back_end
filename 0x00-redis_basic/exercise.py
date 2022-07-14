@@ -9,7 +9,7 @@ from functools import wraps
 
 
 def count_calls(method: typ.Callable) -> typ.Callable:
-    ''' return the number of times a callable was called '''
+    ''' return a wrapper to count the times a function is called '''
     meth_name = method.__qualname__
 
     @wraps(method)
@@ -20,6 +20,20 @@ def count_calls(method: typ.Callable) -> typ.Callable:
 
     return wrapper
 
+
+def call_history(method: typ.Callable) -> typ.Callable:
+    ''' return a wrapper to store a functions arguments and output '''
+
+    @wraps(method)
+    def wrapper(self, *args) -> typ.Union[int, str]:
+        ''' wrapper to store input/output history of a function '''
+        meth_name = method.__qualname__
+        self._redis.rpush(f"{meth_name}:inputs", str(args))
+        output = method(self, *args)
+        self._redis.rpush(f"{meth_name}:outputs", output)
+        return output
+
+    return wrapper
 
 class Cache():
     ''' the cache class '''
