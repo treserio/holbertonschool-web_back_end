@@ -5,6 +5,19 @@
 import redis
 import typing as typ
 from uuid import uuid4
+from functools import wraps
+
+
+def count_calls(method: typ.Callable) -> typ.Callable:
+    ''' return the number of times a callable was called '''
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs) -> typ.Union[int, str]:
+        ''' wrapper to increment counter '''
+        self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+
+    return wrapper
 
 
 class Cache():
@@ -14,6 +27,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: typ.Union[str, bytes, int, float]) -> str:
         ''' generate random key to store data with '''
         k = str(uuid4)
@@ -27,7 +41,7 @@ class Cache():
         return self._redis.get(key)
 
     def get_str(self, key: str) -> str:
-        ''' return str data from cache'''
+        ''' return str data from cache '''
         return self.get(key, str)
 
     def get_int(self, key: str) -> int:
