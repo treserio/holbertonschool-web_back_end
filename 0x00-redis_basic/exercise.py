@@ -43,6 +43,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: typ.Union[str, bytes, int, float]) -> str:
         ''' generate random key to store data with '''
