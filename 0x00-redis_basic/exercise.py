@@ -36,6 +36,24 @@ def call_history(method: typ.Callable) -> typ.Callable:
     return wrapper
 
 
+def replay(method: typ.Callable) -> None:
+    ''' display the history of calls for a particular function '''
+    Red = redis.Redis()
+    qual = method.__qualname__
+
+    # get a list of all the qual:inputs
+    inputs = Red.lrange(f"{qual}:inputs")
+    # get a list of all the qual:outputs
+    outputs = Red.lrange(f"{qual}:outputs")
+    print(f"{qual} was called {len(inputs)} times:")
+
+    # print input and output sets decoded to utf-8
+    print('\n'.join(
+        f"{qual}(*{(i).decode('utf-8')}) -> {(o).decode('utf-8')}"\
+        for i, o in zip(inputs, outputs)
+    ))
+
+
 class Cache():
     ''' the cache class '''
     def __init__(self):
