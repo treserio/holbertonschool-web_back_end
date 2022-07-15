@@ -4,11 +4,12 @@ import requests
 import redis
 
 
-cnt = 0
-
-
 def get_page(url: str) -> str:
     ''' return HTML from url, and also'''
+    start = 0
+    if not start:
+        start += 1
+        cnt = 0
     red = redis.Redis()
     cnt += 1
     red.set(f'count:{url}', cnt, 10)
