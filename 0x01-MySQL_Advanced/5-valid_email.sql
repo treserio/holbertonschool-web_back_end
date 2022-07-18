@@ -2,6 +2,6 @@
 -- reset valid_email to 0 if email changes
 
 CREATE TRIGGER reset_valid
-AFTER UPDATE ON users FOR EACH ROW
-    IF NEW.email == email
+BEFORE UPDATE ON users FOR EACH ROW
+    IF NEW.id == OLD.id
         SET valid_email = 0;
