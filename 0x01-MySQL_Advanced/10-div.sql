@@ -6,5 +6,5 @@ BEGIN
     IF b THEN
         RETURN a / b;
     END IF;
-    RETURN 0
+    RETURN 0;
 END~~
