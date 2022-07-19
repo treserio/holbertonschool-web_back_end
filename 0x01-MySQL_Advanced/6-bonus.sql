@@ -13,7 +13,7 @@ BEGIN
         INSERT INTO projects (name) VALUES (project_name);
         SET @proj_id = LAST_INSERT_ID();
     ELSE
-        SELECT @proj_id := id FROM projects WHERE name = project_name;
+        SET @proj_id = (SELECT id FROM projects WHERE name = project_name);
     END IF;
 
     INSERT INTO corrections (user_id, project_id, score)
