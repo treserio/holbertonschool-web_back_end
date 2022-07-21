@@ -16,8 +16,9 @@ def loggedStats():
     print('\n'.join(f'\tmethod {m}: {col.count_documents({"method": m})}'
                     for m in methods))
 
-    print(f'{col.count_documents({"method": "GET", "path": "/status"})} \
-        status check')
+    print(f'{col.count_documents({"method": "GET", "path": "/status"})} ' +
+        'status check'
+    )
 
 
 if __name__ == "__main__":
