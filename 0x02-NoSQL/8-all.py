@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' mongoDB module, list all documents of collection '''
+''' mongoDB module: list all documents of collection '''
 
 
 def list_all(mongo_collection):
