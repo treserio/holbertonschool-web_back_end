@@ -1,13 +1,13 @@
 -- compute the average wheighted score for a student
 DELIMITER ~~
 
-CREATE FUNCTION ComputeAverageWeightedScoreForUser(user_id int) RETURNS VOID
+CREATE PROCEDURE ComputeAverageWeightedScoreForUser(IN user_id INT)
 BEGIN
-    SET @total = SELECT SUM(projects.weight * corrections.score) from corrections
-    INNER JOIN projects on corrections.project_id = projects.id
-    WHERE corrections.user_id = user_id;
-
     UPDATE users
-    SET average_score = @total
+    SET average_score = (SELECT (
+        SUM(projects.weight * corrections.score) / SUM(projects.weight)
+    ) FROM corrections
+    INNER JOIN projects ON corrections.project_id = projects.id
+    WHERE corrections.user_id = user_id)
     WHERE users.id = user_id;
 END~~
