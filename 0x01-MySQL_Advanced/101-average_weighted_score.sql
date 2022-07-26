@@ -1,6 +1,7 @@
 -- compute the average wheighted score for a student
 DELIMITER ~~
 
+DROP PROCEDURE IF EXISTS holberton.ComputeAverageWeightedScoreForUser;
 CREATE PROCEDURE ComputeAverageWeightedScoreForUser(IN user_id INT)
 BEGIN
     UPDATE users
@@ -13,8 +14,21 @@ BEGIN
     WHERE users.id = user_id;
 END~~
 
+DROP PROCEDURE IF EXISTS holberton.ComputeAverageWeightedScoreForUsers;
 CREATE PROCEDURE ComputeAverageWeightedScoreForUsers()
 BEGIN
-    FOR EACH ROW id IN users
-        ComputeAverageWeightedScoreForUser(id);
+    SET @CustID = 0;
+    lp: WHILE TRUE DO
+        SET @CustID = (SELECT id FROM users
+            WHERE id > @CustID
+            ORDER BY id
+            LIMIT 1
+        );
+
+        IF FOUND_ROWS() = 0 THEN
+            LEAVE lp;
+        END IF;
+
+        CALL ComputeAverageWeightedScoreForUser(@CustID);
+    END WHILE;
 END~~
