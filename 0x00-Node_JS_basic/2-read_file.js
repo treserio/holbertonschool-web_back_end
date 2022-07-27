@@ -1,9 +1,9 @@
 const fs = require('fs');
 
-function countStudents(file) {
+module.exports = function countStudents(file) {
   try {
     var full_list = fs.readFileSync(file, 'utf8').split('\n').slice(1);
-  } catch {
+  } catch (e) {
     throw Error('Cannot load the database');
   }
   students = full_list.filter(st => st != '');
