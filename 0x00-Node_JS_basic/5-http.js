@@ -7,7 +7,6 @@ const app = http.createServer((req, res) => {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
     res.write('This is the list of our students\n');
-
     countStudents(process.argv[2])
       .then((data) => {
         res.write(`Number of students: ${data.total}\n`);
@@ -20,7 +19,7 @@ const app = http.createServer((req, res) => {
         }
         res.end();
       })
-      .catch((err) => res.end(err));
+      .catch((err) => res.end(err.message));
   }
 })
   .listen(1245);
