@@ -20,6 +20,7 @@ const app = http.createServer((req, res) => {
         }
         res.end();
       })
+      .catch((err) => res.end(err));
   }
 })
   .listen(1245);
