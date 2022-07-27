@@ -24,7 +24,7 @@ module.exports = function countStudents(file) {
       }
       res({
         total: students.length,
-        fields: fields
+        fields,
       });
     });
   }));

@@ -14,7 +14,7 @@ const app = http.createServer((req, res) => {
         for (const [k, v] of Object.entries(data.fields)) {
           res.write(`Number of students in ${k}: ${v.length}. List: ${v.join(', ')}`);
           // add new line to every entry except the last key
-          if (k != Object.keys(data.fields)[Object.keys(data.fields).length - 1]) {
+          if (k !== Object.keys(data.fields)[Object.keys(data.fields).length - 1]) {
             res.write('\n');
           }
         }
