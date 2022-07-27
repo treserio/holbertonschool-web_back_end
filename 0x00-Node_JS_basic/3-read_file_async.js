@@ -1,4 +1,4 @@
-// syncronous read of a file and appropriate print
+// syncronous read of a file and appropriate print returning a promise
 const fs = require('fs');
 
 module.exports = function countStudents(file) {
