@@ -22,7 +22,10 @@ module.exports = function countStudents(file) {
       for (const [k, v] of Object.entries(fields)) {
         console.log(`Number of students in ${k}: ${v.length}. List: ${v.join(', ')}`);
       }
-      res();
+      res({
+        total: students.length,
+        fields: fields
+      });
     });
   }));
 };

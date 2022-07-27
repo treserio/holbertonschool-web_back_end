@@ -10,7 +10,7 @@ const app = http.createServer((req, res) => {
 
     countStudents(process.argv[2])
       .then((data) => {
-        res.write(`Number of students: ${data.students}\n`);
+        res.write(`Number of students: ${data.total}\n`);
         for (const [k, v] of Object.entries(data.fields)) {
           res.write(`Number of students in ${k}: ${v.length}. List: ${v.join(', ')}`);
           // add new line to every entry except the last key
