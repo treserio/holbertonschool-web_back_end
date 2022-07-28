@@ -4,7 +4,7 @@ const countStudents = require('./3-read_file_async');
 
 const app = exp();
 
-app.get('/', (req, res) => res.send('Hello Holberton School!')).listen(1245);
+app.get('/', (req, res) => res.send('Hello Holberton School!'));
 
 app.get('/students', (req, res) => {
   let output = 'This is the list of our students\n';
@@ -21,6 +21,8 @@ app.get('/students', (req, res) => {
       res.end(output);
     })
     .catch((err) => res.end(output + err.message));
-}).listen(1245);
+});
+
+app.listen(1245);
 
 module.exports = app;
