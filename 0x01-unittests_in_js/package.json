@@ -3,16 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "0-calcul.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "mocha"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "mocha": "^10.0.0",
-    "chai": "^4.3.6",
-    "sinon": "^14.0.0"
-  },
   "dependencies": {
     "chai": "^4.3.6",
     "mocha": "^10.0.0",
