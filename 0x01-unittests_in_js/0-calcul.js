@@ -1,5 +1,6 @@
+// calculateNumber takes 2 numbers and return the sum of their rounded values
+
 function calculateNumber(a, b) {
-  // if (isNaN(a) || isNaN(b)) throw TypeError('NaN was passed');
 	return Math.round(a) + Math.round(b);
 }
 
