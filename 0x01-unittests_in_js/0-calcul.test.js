@@ -19,7 +19,7 @@ describe('calculateNumber', () => {
 	});
 
   it('NaN', () => {
-    assert.equal(calculateNumber(1, 'z'), NaN);
-    assert.equal(calculateNumber(NaN, 6.9), NaN);
+    assert.throws(() => calculateNumber(1, 'z'), TypeError);
+    assert.throws(() => calculateNumber(NaN, 6.9), TypeError);
   });
 })
