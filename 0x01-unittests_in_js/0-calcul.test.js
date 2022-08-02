@@ -17,4 +17,9 @@ describe('calculateNumber', () => {
 		assert.equal(calculateNumber(1.5, -3.7), -2);
 		assert.equal(calculateNumber(-1.3, 0), -1);
 	});
+
+  it('NaN', () => {
+    assert.equal(calculateNumber(1, 'z'), NaN);
+    assert.equal(calculateNumber(NaN, 6.9), NaN);
+  });
 })
