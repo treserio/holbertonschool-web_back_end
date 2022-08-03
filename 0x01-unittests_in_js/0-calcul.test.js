@@ -18,7 +18,7 @@ describe('calculateNumber', () => {
 		assert.equal(calculateNumber(-1.3, 0), -1);
 	});
 
-  it('NaN', () => {
+  it('Errors', () => {
     assert.throws(() => calculateNumber(1, 'z'), TypeError);
     assert.throws(() => calculateNumber(NaN, 6.9), TypeError);
   });

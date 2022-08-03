@@ -1,5 +1,5 @@
 function calculateNumber(type, a, b) {
-  if (typeof(type) != string) throw new TypeError('type not a string');
+  if (typeof(type) != 'string') throw new TypeError('type not a string');
   if (isNaN(a) || isNaN(b)) throw new TypeError('NaN passed as argument');
 
   switch(type.toUpperCase()) {
