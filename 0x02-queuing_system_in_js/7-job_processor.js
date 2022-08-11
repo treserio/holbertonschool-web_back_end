@@ -13,12 +13,12 @@ function sendNotification(phoneNumber, message, job, done) {
   done();
 }
 
-que.process('push_notification_code_2', 5, (job, done) => {
+que.process('push_notification_code_2', 4, (job, done) => {
   sendNotification(job.data.phoneNumber, job.data.message, job, done);
 });
-// que.process('push_notification_code_2', 4, (job, done) => {
-//   sendNotification(job.data.phoneNumber, job.data.message, job, done);
-// });
-// que.process('push_notification_code_2', 3, (job, done) => {
-//   sendNotification(job.data.phoneNumber, job.data.message, job, done);
-// });
+que.process('push_notification_code_2', 4, (job, done) => {
+  sendNotification(job.data.phoneNumber, job.data.message, job, done);
+});
+que.process('push_notification_code_2', 3, (job, done) => {
+  sendNotification(job.data.phoneNumber, job.data.message, job, done);
+});
