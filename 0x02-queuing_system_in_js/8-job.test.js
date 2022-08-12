@@ -1,22 +1,21 @@
 import createPushNotificationsJobs from './8-job.js';
 
 const kue = require('kue');
-const queue = kue.createQueue();
+const que = kue.createQueue();
 const expect = require('chai').expect;
 
-describe ('createPushNotificationsJobs test suite', () => {
-  // Setup test mode
-  before(() => queue.testMode.enter(true));
-  afterEach(() => queue.testMode.clear());
-  after(() => queue.testMode.exit());
+describe('createPushNotificationsJobs', () => {
+  before(() => que.testMode.enter(true));
+  afterEach(() => que.testMode.clear());
+  after(() => que.testMode.exit());
 
-  it('Test that displays error message if not array', () => {
-    expect(() => createPushNotificationsJobs('8', queue)).to.throw(Error, 'Jobs is not an array');
-    expect(() => createPushNotificationsJobs({'k': 'v'}, queue)).to.throw(Error, 'Jobs is not an array');
-    expect(() => createPushNotificationsJobs(8, queue)).to.throw(Error, 'Jobs is not an array');
+  it('Errors', () => {
+    expect(() => createPushNotificationsJobs('8', que)).to.throw(Error, 'Jobs is not an array');
+    expect(() => createPushNotificationsJobs({'k': 'v'}, que)).to.throw(Error, 'Jobs is not an array');
+    expect(() => createPushNotificationsJobs(8, que)).to.throw(Error, 'Jobs is not an array');
   });
 
-  it('Test that can create 2 new jobs for the queue', () => {
+  it('Test creation of 2 jobs', () => {
     const jobs = [
       {
         phoneNumber: '4153518780',
@@ -24,17 +23,19 @@ describe ('createPushNotificationsJobs test suite', () => {
       },
       {
         phoneNumber: '4153518781',
-        message: 'This is the code 1234 to verify your account'
+        message: 'This is the code 5678 to verify your account'
       }
     ];
 
-    createPushNotificationsJobs(jobs, queue);
-    expect(queue.testMode.jobs.length).to.equal(2);
-    expect(queue.testMode.jobs[0].type).to.equal('push_notification_code_3');
-    expect(queue.testMode.jobs[0].data.phoneNumber).to.equal('4153518780');
-    expect(queue.testMode.jobs[1].data).to.deep.equal({
-      phoneNumber: '4153518781',
-      message: 'This is the code 1234 to verify your account'
-    })
+    createPushNotificationsJobs(jobs, que);
+    expect(que.testMode.jobs.length).to.equal(2);
+    expect(que.testMode.jobs[0].type).to.equal('push_notification_code_3');
+    expect(que.testMode.jobs[0].data.phoneNumber).to.equal('4153518780');
+    expect(que.testMode.jobs[1].data.message).to.equal(
+      'This is the code 5678 to verify your account'
+    );
+    que.process('push_notification_code_3', 2, (job, done) => {
+      done();
+    });
   });
 });
